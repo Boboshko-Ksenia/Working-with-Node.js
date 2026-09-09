@@ -5,6 +5,7 @@ const PORT = 8000
 const HOST = 'localhost'
 const APP = express()
 
+
 function getCurrentDay() {
     return(moment().format('dddd'))
 }
@@ -30,7 +31,19 @@ APP.get('/timestamp', (req, res) => {
     })
 })
 
+APP.get(`/health`, (req, res) => {
+    res.json({
+        status: 'ok'
+    })
+})
 
+APP.get('/stats', (req, res) => {
+    res.json({
+        uptime: Math.floor(process.uptime()),
+        nodeVersion: process.version,
+        timestamp: getCurrentTimestamp()
+    })
+})
 
 APP.listen(PORT, HOST, () => {
     console.log(`Server is running on http://${HOST}:${PORT}`)
