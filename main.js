@@ -5,6 +5,7 @@ const PORT = 8000
 const HOST = 'localhost'
 const APP = express()
 
+
 function getCurrentDay() {
     return(moment().format('dddd'))
 }
@@ -29,6 +30,7 @@ APP.get('/timestamp', (req, res) => {
         timestamp: getCurrentTimestamp()
     })
 })
+
 
 const products = [
     { id: 1, name: 'laptop', price: 1000, category: 'electronics' },
@@ -64,6 +66,20 @@ APP.get('/products/:id', (req, res) => {
         return res.status(404).json({ error: 'Product not found' })
     }
     res.json(product)
+
+APP.get(`/health`, (req, res) => {
+    res.json({
+        status: 'ok'
+    })
+})
+
+APP.get('/stats', (req, res) => {
+    res.json({
+        uptime: Math.floor(process.uptime()),
+        nodeVersion: process.version,
+        timestamp: getCurrentTimestamp()
+    })
+
 })
 
 APP.listen(PORT, HOST, () => {
